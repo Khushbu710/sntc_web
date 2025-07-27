@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -8,6 +7,25 @@ export default function HackerElements() {
   const [binaryStream, setBinaryStream] = useState<string[]>([]);
   const [systemStatus, setSystemStatus] = useState<string[]>([]);
   const [technicalData, setTechnicalData] = useState<string[]>([]);
+
+  // New states for random patterns currently generated inside JSX:
+  const [glitchLines, setGlitchLines] = useState<
+    { top: string; animationDelay: string; animationDuration: string; color: string }[]
+  >([]);
+  const [particles, setParticles] = useState<
+    {
+      width: number;
+      height: number;
+      backgroundColor: string;
+      left: string;
+      top: string;
+      animationDelay: string;
+      animationDuration: string;
+    }[]
+  >([]);
+  const [networkLines, setNetworkLines] = useState<
+    { x1: string; y1: string; x2: string; y2: string; stroke: string }[]
+  >([]);
 
   useEffect(() => {
     const hackerPhrases = [
@@ -87,6 +105,46 @@ export default function HackerElements() {
       setTechnicalData(newData);
     };
 
+    // Generate glitch lines once, store in state:
+    const newGlitchLines = [...Array(8)].map((_, i) => {
+      const colors = ['#00ffff', '#ff0080', '#ffff00', '#ff8000'];
+      return {
+        top: `${15 + i * 12}%`,
+        animationDelay: `${i * 0.3}s`,
+        animationDuration: `${2 + Math.random() * 2}s`,
+        color: colors[i % colors.length],
+      };
+    });
+    setGlitchLines(newGlitchLines);
+
+    // Generate particles once, store in state:
+    const newParticles = [...Array(50)].map(() => {
+      const colors = ['#00ffff', '#ff0080', '#ffff00', '#ff8000', '#00ff00'];
+      return {
+        width: 2 + Math.random() * 4,
+        height: 2 + Math.random() * 4,
+        backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 5}s`,
+        animationDuration: `${2 + Math.random() * 3}s`,
+      };
+    });
+    setParticles(newParticles);
+
+    // Generate network lines once, store in state:
+    const newNetworkLines = [...Array(10)].map(() => {
+      const colors = ['#00ffff', '#ff0080', '#ffff00'];
+      return {
+        x1: `${Math.random() * 100}%`,
+        y1: `${Math.random() * 100}%`,
+        x2: `${Math.random() * 100}%`,
+        y2: `${Math.random() * 100}%`,
+        stroke: colors[Math.floor(Math.random() * colors.length)],
+      };
+    });
+    setNetworkLines(newNetworkLines);
+
     updateHackerText();
     updateBinaryStream();
     updateSystemStatus();
@@ -109,11 +167,14 @@ export default function HackerElements() {
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {/* Enhanced Animated Circuit Pattern */}
       <div className="absolute inset-0 opacity-15">
-        <div className="absolute inset-0 animate-pulse" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20h80v80h-80zM30 30h60v60h-60zM40 40h40v40h-40z' fill='none' stroke='%2300ffff' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%2300ffff' opacity='0.5'/%3E%3Ccircle cx='100' cy='20' r='3' fill='%23ff0080' opacity='0.5'/%3E%3Ccircle cx='20' cy='100' r='3' fill='%23ffff00' opacity='0.5'/%3E%3Ccircle cx='100' cy='100' r='3' fill='%23ff8000' opacity='0.5'/%3E%3C/svg%3E")`,
-          backgroundSize: '120px 120px',
-          animation: 'circuit-pulse 3s ease-in-out infinite'
-        }}></div>
+        <div
+          className="absolute inset-0 animate-pulse"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20h80v80h-80zM30 30h60v60h-60zM40 40h40v40h-40z' fill='none' stroke='%2300ffff' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='20' cy='20' r='3' fill='%2300ffff' opacity='0.5'/%3E%3Ccircle cx='100' cy='20' r='3' fill='%23ff0080' opacity='0.5'/%3E%3Ccircle cx='20' cy='100' r='3' fill='%23ffff00' opacity='0.5'/%3E%3Ccircle cx='100' cy='100' r='3' fill='%23ff8000' opacity='0.5'/%3E%3C/svg%3E")`,
+            backgroundSize: '120px 120px',
+            animation: 'circuit-pulse 3s ease-in-out infinite',
+          }}
+        ></div>
       </div>
 
       {/* Multiple Floating Hacker Text Lines */}
@@ -133,249 +194,143 @@ export default function HackerElements() {
         </div>
 
         {/* Bottom scrolling text */}
-        <div className="absolute top-3/4 left-0 w-full font-mono text-purple-400 text-xs opacity-20">
-          <div className="animate-marquee-medium whitespace-nowrap">
-            BIOMETRIC SCAN AUTHENTICATED • HOLOGRAPHIC PROJECTION STABLE • SYNTHETIC INTELLIGENCE AWAKENING • DIGITAL CONSCIOUSNESS UPLOADED
+        <div className="absolute top-3/4 left-0 w-full font-mono text-pink-400 text-xs opacity-20">
+          <div className="animate-marquee-fast whitespace-nowrap">
+            SYSTEM OVERRIDE • NETWORK BREACHED • ROOT ACCESS GRANTED • PAYLOAD DEPLOYED • FIREWALL DISABLED • SYSTEM OVERRIDE
           </div>
         </div>
       </div>
 
-      {/* Enhanced Binary Stream - Multiple Columns */}
-      <div className="absolute top-0 right-0 h-full w-32 opacity-25">
-        <div className="font-mono text-green-400 text-xs leading-tight columns-4 gap-2">
-          {binaryStream.map((bit, index) => (
-            <div key={index} className="animate-pulse break-inside-avoid" style={{ animationDelay: `${index * 30}ms` }}>
-              {bit}
-            </div>
-          ))}
-        </div>
+      {/* Binary Stream */}
+      <div className="absolute bottom-0 right-0 font-mono text-green-500 text-xs opacity-70 p-4 bg-black bg-opacity-30 rounded-md max-w-xs">
+        {binaryStream.join('')}
       </div>
 
-      {/* Left side technical data stream */}
-      <div className="absolute top-0 left-0 h-full w-40 opacity-20">
-        <div className="font-mono text-cyan-400 text-xs leading-loose p-4">
-          {technicalData.map((data, index) => (
-            <div key={index} className="animate-pulse mb-2" style={{ animationDelay: `${index * 500}ms` }}>
-              {data}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Enhanced Glitch Lines with Random Patterns */}
-      <div className="absolute inset-0">
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-glitch-enhanced"
-            style={{
-              top: `${15 + i * 12}%`,
-              animationDelay: `${i * 0.3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-              background: `linear-gradient(90deg, transparent, ${['#00ffff', '#ff0080', '#ffff00', '#ff8000'][i % 4]}, transparent)`
-            }}
-          ></div>
+      {/* System Status Messages */}
+      <div className="absolute top-0 right-0 p-4 font-mono text-yellow-400 text-sm space-y-1 max-w-xs">
+        {systemStatus.map((status, idx) => (
+          <div key={idx}>{status}</div>
         ))}
       </div>
 
-      {/* Enhanced Radar Sweep with Zoom Effect */}
-      <div className="absolute top-10 right-10 w-40 h-40 opacity-40">
-        <div className="relative w-full h-full border-2 border-cyan-400 rounded-full animate-zoom-pulse">
-          <div className="absolute inset-2 border border-cyan-400/50 rounded-full animate-ping"></div>
-          <div className="absolute inset-4 border border-cyan-400/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-          <div 
-            className="absolute inset-0 border-t-4 border-cyan-400 rounded-full animate-spin"
-            style={{ animationDuration: '1.5s' }}
-          ></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Enhanced System Status with Multiple Panels */}
-      <div className="absolute bottom-10 left-10 font-mono text-xs opacity-35">
-        <div className="bg-black/80 p-4 rounded border border-cyan-400/30 backdrop-blur-sm">
-          <div className="text-cyan-400 mb-2 font-bold">SYSTEM STATUS</div>
-          <div className="space-y-1">
-            {systemStatus.map((status, index) => (
-              <div key={index} className="flex items-center space-x-2">
-                <div className={`w-2 h-2 rounded-full animate-pulse ${index % 4 === 0 ? 'bg-green-400' : index % 4 === 1 ? 'bg-yellow-400' : index % 4 === 2 ? 'bg-red-400' : 'bg-cyan-400'}`}></div>
-                <span className="text-green-400">{status}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Technical Specifications Panel */}
-      <div className="absolute bottom-10 right-10 font-mono text-xs opacity-30">
-        <div className="bg-black/80 p-4 rounded border border-purple-400/30 backdrop-blur-sm">
-          <div className="text-purple-400 mb-2 font-bold">TECH SPECS</div>
-          <div className="space-y-1">
-            {technicalData.map((spec, index) => (
-              <div key={index} className="text-purple-300 animate-pulse" style={{ animationDelay: `${index * 200}ms` }}>
-                {spec}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Enhanced Hexagonal Grid with Animation */}
-      <div className="absolute inset-0 opacity-8">
-        <div className="absolute inset-0 animate-hex-rotate" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg stroke='%2300ffff' stroke-width='0.5' opacity='0.4'%3E%3Cpath d='M40 20l20 11.5v23L40 66l-20-11.5v-23L40 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '80px 80px'
-        }}></div>
-      </div>
-
-      {/* Enhanced Data Streams with Multiple Lines */}
-      <div className="absolute inset-0">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute w-px h-full bg-gradient-to-b from-transparent via-${['cyan', 'purple', 'green', 'yellow', 'red', 'pink'][i]}-400 to-transparent opacity-25 animate-data-stream`}
-            style={{
-              left: `${15 + i * 15}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${3 + i * 0.5}s`
-            }}
-          ></div>
-        ))}
-      </div>
-      
-      {/* Enhanced Floating Particles with Zoom Effects */}
-      <div className="absolute inset-0">
-        {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            className={`absolute rounded-full animate-particle-zoom opacity-40`}
-            style={{
-              width: `${2 + Math.random() * 4}px`,
-              height: `${2 + Math.random() * 4}px`,
-              backgroundColor: ['#00ffff', '#ff0080', '#ffff00', '#ff8000', '#00ff00'][Math.floor(Math.random() * 5)],
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${2 + Math.random() * 3}s`
-            }}
-          ></div>
+      {/* Technical Data */}
+      <div className="absolute bottom-0 left-0 p-4 font-mono text-cyan-300 text-xs space-y-1 max-w-xs">
+        {technicalData.map((data, idx) => (
+          <div key={idx}>{data}</div>
         ))}
       </div>
 
-      {/* Enhanced Terminal Cursor with Typing Effect */}
-      <div className="absolute bottom-5 right-5 font-mono text-green-400 text-lg opacity-50">
-        <span className="animate-terminal-cursor">█</span>
-      </div>
+      {/* Glitch Lines */}
+      {glitchLines.map(({ top, animationDelay, animationDuration, color }, idx) => (
+        <div
+          key={idx}
+          className="absolute left-0 right-0 h-px opacity-60"
+          style={{
+            top,
+            backgroundColor: color,
+            animationDelay,
+            animationDuration,
+            animationName: 'glitch-line',
+            animationTimingFunction: 'linear',
+            animationIterationCount: 'infinite',
+          }}
+        />
+      ))}
 
-      {/* Network Connection Lines */}
-      <div className="absolute inset-0 opacity-20">
-        <svg className="w-full h-full">
-          {[...Array(10)].map((_, i) => (
-            <line
-              key={i}
-              x1={`${Math.random() * 100}%`}
-              y1={`${Math.random() * 100}%`}
-              x2={`${Math.random() * 100}%`}
-              y2={`${Math.random() * 100}%`}
-              stroke={['#00ffff', '#ff0080', '#ffff00'][Math.floor(Math.random() * 3)]}
-              strokeWidth="1"
-              className="animate-pulse"
-              style={{ animationDelay: `${i * 0.2}s` }}
-            />
-          ))}
-        </svg>
-      </div>
+      {/* Particles */}
+      {particles.map(({ width, height, backgroundColor, left, top, animationDelay, animationDuration }, idx) => (
+        <div
+          key={idx}
+          className="absolute rounded-full opacity-70"
+          style={{
+            width,
+            height,
+            backgroundColor,
+            left,
+            top,
+            animationDelay,
+            animationDuration,
+            animationName: 'particle-float',
+            animationTimingFunction: 'ease-in-out',
+            animationIterationCount: 'infinite',
+          }}
+        />
+      ))}
+
+      {/* Network Lines */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none">
+        {networkLines.map(({ x1, y1, x2, y2, stroke }, idx) => (
+          <line
+            key={idx}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke={stroke}
+            strokeWidth={0.5}
+            opacity={0.5}
+            style={{ animation: 'network-line-pulse 3s ease-in-out infinite' }}
+          />
+        ))}
+      </svg>
 
       <style jsx>{`
-        @keyframes marquee-fast {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
+        @keyframes glitch-line {
+          0% {
+            transform: translateX(0);
+          }
+          50% {
+            transform: translateX(10px);
+          }
+          100% {
+            transform: translateX(0);
+          }
         }
-        
-        @keyframes marquee-slow {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
+
+        @keyframes particle-float {
+          0%, 100% {
+            transform: translateY(0);
+            opacity: 0.7;
+          }
+          50% {
+            transform: translateY(-10px);
+            opacity: 0.3;
+          }
         }
-        
-        @keyframes marquee-medium {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
+
+        @keyframes network-line-pulse {
+          0%, 100% {
+            stroke-opacity: 0.5;
+          }
+          50% {
+            stroke-opacity: 0.2;
+          }
         }
-        
-        @keyframes glitch-enhanced {
-          0%, 100% { opacity: 0; transform: translateX(0) scaleX(1); }
-          25% { opacity: 1; transform: translateX(-10px) scaleX(1.1); }
-          50% { opacity: 1; transform: translateX(5px) scaleX(0.9); }
-          75% { opacity: 1; transform: translateX(-3px) scaleX(1.05); }
-        }
-        
-        @keyframes zoom-pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.1); }
-        }
-        
-        @keyframes particle-zoom {
-          0%, 100% { transform: scale(1) rotate(0deg); }
-          50% { transform: scale(2) rotate(180deg); }
-        }
-        
-        @keyframes data-stream {
-          0% { opacity: 0.1; }
-          50% { opacity: 0.8; }
-          100% { opacity: 0.1; }
-        }
-        
-        @keyframes hex-rotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        
+
         @keyframes circuit-pulse {
-          0%, 100% { opacity: 0.1; }
-          50% { opacity: 0.3; }
+          0%, 100% {
+            opacity: 0.15;
+          }
+          50% {
+            opacity: 0.3;
+          }
         }
-        
-        @keyframes terminal-cursor {
-          0%, 50% { opacity: 1; }
-          51%, 100% { opacity: 0; }
-        }
-        
+
         .animate-marquee-fast {
-          animation: marquee-fast 12s linear infinite;
+          animation: marquee 8s linear infinite;
         }
-        
+
         .animate-marquee-slow {
-          animation: marquee-slow 20s linear infinite;
+          animation: marquee 15s linear infinite;
         }
-        
-        .animate-marquee-medium {
-          animation: marquee-medium 16s linear infinite;
-        }
-        
-        .animate-glitch-enhanced {
-          animation: glitch-enhanced 2s ease-in-out infinite;
-        }
-        
-        .animate-zoom-pulse {
-          animation: zoom-pulse 2s ease-in-out infinite;
-        }
-        
-        .animate-particle-zoom {
-          animation: particle-zoom 3s ease-in-out infinite;
-        }
-        
-        .animate-data-stream {
-          animation: data-stream 4s ease-in-out infinite;
-        }
-        
-        .animate-hex-rotate {
-          animation: hex-rotate 30s linear infinite;
-        }
-        
-        .animate-terminal-cursor {
-          animation: terminal-cursor 1s step-end infinite;
+
+        @keyframes marquee {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
         }
       `}</style>
     </div>

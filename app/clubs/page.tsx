@@ -43,7 +43,7 @@ export type Club = {
 
 
 
-const clubs = [
+const clubs:Club[] = [
   {
     id: 'kamandprompt',
     name: 'Programming Club (KamandPrompt)',
