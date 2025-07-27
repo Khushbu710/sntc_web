@@ -142,7 +142,7 @@ export default function OfferingsPage() {
         <section className="py-20 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {offerings.map((offering, index) => (
+              {offerings.map((offering, _index) => (
                 <div
                   key={offering.id}
                   className="group relative bg-gradient-to-br from-gray-900/50 to-black/50 rounded-xl border border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-300 overflow-hidden"

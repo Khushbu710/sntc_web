@@ -45,14 +45,14 @@ export default function TechBackground() {
       });
     }
 
-    // Network connections
-    const connections: Array<{
-      x1: number;
-      y1: number;
-      x2: number;
-      y2: number;
-      opacity: number;
-    }> = [];
+    // // Network connections
+    // const connections: Array<{
+    //   x1: number;
+    //   y1: number;
+    //   x2: number;
+    //   y2: number;
+    //   opacity: number;
+    // }> = [];
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);

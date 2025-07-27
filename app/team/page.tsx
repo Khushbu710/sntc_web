@@ -9,7 +9,22 @@ import HackerElements from '@/components/HackerElements';
 import TypingText from '@/components/TypingText';
 import GlitchText from '@/components/GlitchText';
 
-const team = [
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  clearance: string;
+  status: string;
+  specialization: string;
+  experience: string;
+  email: string;
+  bio: string;
+  achievements: string[];
+  image: string;
+}
+
+const team: TeamMember[] = [
   {
     id: 'director',
     name: 'Dr. Rajesh Kumar',
@@ -125,10 +140,10 @@ const team = [
 ];
 
 export default function TeamPage() {
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
   const [isPopupActive, setIsPopupActive] = useState(false);
 
-  const handleMemberAccess = (member) => {
+  const handleMemberAccess = (member: TeamMember) => {
     setSelectedMember(member);
     setIsPopupActive(true);
   };
@@ -190,7 +205,7 @@ export default function TeamPage() {
         <section className={`py-12 px-4 transition-all duration-500 ${isPopupActive ? 'blur-md opacity-30' : ''}`}>
           <div className="max-w-7xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {team.map((member, index) => (
+              {team.map((member, _index) => (
                 <div
                   key={member.id}
                   className="group relative bg-gradient-to-br from-gray-900/50 to-black/50 rounded-xl border border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-300 overflow-hidden cursor-pointer"

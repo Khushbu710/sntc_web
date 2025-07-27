@@ -91,7 +91,7 @@ export default function Home() {
                     The Science and Technology Committee of IIT Mandi serves as the central neural network for all technical activities on campus. We orchestrate innovation through our specialized clubs and cells.
                   </p>
                   <p>
-                    Our mission is to foster a culture of technological excellence, research, and development that prepares students for the challenges of tomorrow's digital world.
+                    Our mission is to foster a culture of technological excellence, research, and development that prepares students for the challenges of tomorrow digital world.
                   </p>
                   <div className="flex items-center space-x-4 mt-6">
                     <div className="w-12 h-12 bg-cyan-400/20 rounded-lg flex items-center justify-center">

@@ -8,6 +8,7 @@ import TechBackground from '@/components/TechBackground';
 import HackerElements from '@/components/HackerElements';
 import TypingText from '@/components/TypingText';
 import GlitchText from '@/components/GlitchText';
+import Image from 'next/image';
 
 export type Club = {
   id: string;
@@ -311,15 +312,18 @@ export default function ClubsPage() {
                     }}></div>
 
                     {/* Enhanced Club Logo Sizing */}
-                    <img
+                    <Image
                       src={club.logo}
                       alt={club.name}
                       className={`z-10 relative group-hover:scale-110 transition-transform duration-300 ${
                         club.id === 'kamandprompt' ? 'w-44 h-44 object-cover' :
-                          club.id === 'robotronics' ? 'w-44 h-44 object-cover' :
-                            'w-40 h-40 object-contain'
+                        club.id === 'robotronics' ? 'w-44 h-44 object-cover' :
+                        'w-40 h-40 object-contain'
                       }`}
-                    />
+                      width={club.id === 'kamandprompt' || club.id === 'robotronics' ? 176 : 160} // 44*4 = 176px, 40*4=160px (assuming tailwind default)
+                      height={club.id === 'kamandprompt' || club.id === 'robotronics' ? 176 : 160}
+                      style={{ objectFit: club.id === 'kamandprompt' || club.id === 'robotronics' ? 'cover' : 'contain' }}
+                    />  
 
                     {/* Animated Glow Effect */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-50 transition-opacity duration-300" style={{
@@ -429,11 +433,16 @@ export default function ClubsPage() {
                   boxShadow: `0 0 40px ${selectedClub.color}40`
                 }}
               >
-                <img
+                <Image
                   src={selectedClub.logo}
                   alt={selectedClub.name}
-                  className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/90 p-4 mx-auto"
+                  width={128}  // md:w-32 = 8rem = 128px
+                  height={128}
+                  className="rounded-full bg-white/90 p-4 mx-auto"
+                  sizes="(min-width: 768px) 128px, 96px" // md:w-32=128px, default w-24=6rem=96px
+                  style={{ width: 'auto', height: 'auto' }}
                 />
+
                 <div className="absolute inset-0 rounded-2xl animate-pulse" style={{
                   background: `linear-gradient(45deg, transparent, ${selectedClub.color}20, transparent)`,
                   backgroundSize: '400% 400%'
