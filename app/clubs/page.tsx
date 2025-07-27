@@ -9,15 +9,38 @@ import HackerElements from '@/components/HackerElements';
 import TypingText from '@/components/TypingText';
 import GlitchText from '@/components/GlitchText';
 
-type Club = {
+export type Club = {
+  id: string;
   name: string;
-  desc: string;
+  category: string;
+  status: "ACTIVE" | "INACTIVE";
+  members: number;
+  description: string;
+  activities: string[];
   website: string;
   logo: string;
-  orbitRadius: number;
+  tech: string[];
+  level: string;
   color: string;
   activity: number;
+  image: string;
 };
+
+
+  
+  // members: {
+  //   name: string;
+  //   role: string;
+  //   avatarUrl?: string;
+  // }[];
+  // activities: {
+  // title: string;
+  // date: string;
+  // description: string;
+  // }[];
+  // activity: number; // percentage from 0–100
+
+
 
 
 const clubs = [
@@ -71,7 +94,7 @@ const clubs = [
   },
   {
     id: 'ecell',
-    name: 'Entrepreneurship Cell (E‑Cell)',
+    name: 'Entrepreneurship Cell (E Cell)',
     category: 'Business',
     status: 'ACTIVE',
     members: 70,
@@ -146,7 +169,7 @@ export default function ClubsPage() {
     }, 500);
   };
 
-  const handleBackdropClick = (e) => {
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       handleClose();
     }
