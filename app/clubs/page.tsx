@@ -120,7 +120,7 @@ const clubs = [
 ];
 
 export default function ClubsPage() {
-  const [selectedClub, setSelectedClub] = useState(null);
+  const [selectedClub, setSelectedClub] = useState<Club | null>(null);
   const [animationPhase, setAnimationPhase] = useState('closed');
 
   const handleClubClick = (club: Club) => {
